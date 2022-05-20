@@ -17,9 +17,9 @@ class SubCategorySeeder extends Seeder
      */
     public function run()
     {
-        $firstCategory = Category::query()->where('name', '=', 'X-Ray')->first()->pluck('id');
-        $secondCategory = Category::query()->where('name', '=', 'Ultrasound')->first()->pluck('id');
-        $thirdCategory = Category::query()->where('name', '=', 'CT Scan')->first()->pluck('id');
+        $firstCategory = Category::query()->where('slug', '=', 'x-ray')->select('id')->value('id');
+        $secondCategory = Category::query()->where('slug', '=', 'ultrasound')->select('id')->value('id');
+        $thirdCategory = Category::query()->where('slug', '=', 'ct-scan')->select('id')->value('id');
 
         $subCategories = [
             [
@@ -109,7 +109,11 @@ class SubCategorySeeder extends Seeder
         ];
 
         foreach($subCategories as $subCategory) {
-            SubCategory::updateOrCreate($subCategory);
+            SubCategory::updateOrCreate([
+                'name' => $subCategory['name'],
+                'slug' => $subCategory['slug'],
+                'category_id' => $subCategory['category_id']
+            ]);
         }
     }
 }
