@@ -24,4 +24,4 @@ Route::get('/', function () {
 });
 
 
-Route::get('categories', [CategoryController::class, 'index']);
+Route::get('tests', [CategoryController::class, 'index']);
